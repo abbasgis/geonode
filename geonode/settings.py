@@ -36,7 +36,6 @@ from django.conf.global_settings import DATETIME_INPUT_FORMATS
 from geonode import get_version
 from kombu import Queue, Exchange
 
-
 SILENCED_SYSTEM_CHECKS = ['1_8.W001', 'fields.W340', 'auth.W004', 'urls.W002']
 
 # GeoNode Version
@@ -83,7 +82,7 @@ try:
     ALLOWED_HOSTS = ast.literal_eval(os.getenv('ALLOWED_HOSTS'))
 except ValueError:
     # fallback to regular list of values separated with misc chars
-    ALLOWED_HOSTS = ['localhost', 'django', 'geonode'] if os.getenv('ALLOWED_HOSTS') is None \
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'django', 'geonode'] if os.getenv('ALLOWED_HOSTS') is None \
         else re.split(r' *[,|:|;] *', os.getenv('ALLOWED_HOSTS'))
 
 # AUTH_IP_WHITELIST property limits access to users/groups REST endpoints
@@ -147,7 +146,6 @@ USE_L10N = strtobool(os.getenv('USE_I18N', 'True'))
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
-
 _DEFAULT_LANGUAGES = (
     ('en', 'English'),
     ('es', 'Español'),
@@ -209,7 +207,6 @@ EXTRA_LANG_INFO = {
         'name_local': 'sinhala',
     },
 }
-
 
 AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL', 'people.Profile')
 
@@ -328,64 +325,64 @@ GEONODE_APPS = GEONODE_CORE_APPS + GEONODE_INTERNAL_APPS + GEONODE_CONTRIB_APPS
 
 INSTALLED_APPS = (
 
-    'modeltranslation',
+                     'modeltranslation',
 
-    # Boostrap admin theme
-    # 'django_admin_bootstrapped.bootstrap3',
-    # 'django_admin_bootstrapped',
+                     # Boostrap admin theme
+                     # 'django_admin_bootstrapped.bootstrap3',
+                     # 'django_admin_bootstrapped',
 
-    # Apps bundled with Django
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.sitemaps',
-    'django.contrib.staticfiles',
-    'django.contrib.messages',
-    'django.contrib.humanize',
-    'django.contrib.gis',
+                     # Apps bundled with Django
+                     'django.contrib.auth',
+                     'django.contrib.contenttypes',
+                     'django.contrib.sessions',
+                     'django.contrib.sites',
+                     'django.contrib.admin',
+                     'django.contrib.sitemaps',
+                     'django.contrib.staticfiles',
+                     'django.contrib.messages',
+                     'django.contrib.humanize',
+                     'django.contrib.gis',
 
-    # Utility
-    'dj_pagination',
-    'taggit',
-    'treebeard',
-    'geoexplorer',
-    'leaflet',
-    'bootstrap3_datetime',
-    'django_filters',
-    'django_basic_auth',
-    'autocomplete_light',
-    'mptt',
-    'storages',
-    'floppyforms',
+                     # Utility
+                     'dj_pagination',
+                     'taggit',
+                     'treebeard',
+                     'geoexplorer',
+                     'leaflet',
+                     'bootstrap3_datetime',
+                     'django_filters',
+                     'django_basic_auth',
+                     'autocomplete_light',
+                     'mptt',
+                     'storages',
+                     'floppyforms',
 
-    # Theme
-    'django_forms_bootstrap',
+                     # Theme
+                     'django_forms_bootstrap',
 
-    # Social
-    'avatar',
-    'dialogos',
-    'agon_ratings',
-    'announcements',
-    'actstream',
-    'user_messages',
-    'tastypie',
-    'polymorphic',
-    'guardian',
-    'oauth2_provider',
-    'corsheaders',
+                     # Social
+                     'avatar',
+                     'dialogos',
+                     'agon_ratings',
+                     'announcements',
+                     'actstream',
+                     'user_messages',
+                     'tastypie',
+                     'polymorphic',
+                     'guardian',
+                     'oauth2_provider',
+                     'corsheaders',
 
-    'invitations',
+                     'invitations',
 
-    # login with external providers
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+                     # login with external providers
+                     'allauth',
+                     'allauth.account',
+                     'allauth.socialaccount',
 
-    # GeoNode
-    'geonode',
-) + GEONODE_APPS
+                     # GeoNode
+                     'geonode',
+                 ) + GEONODE_APPS
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -402,11 +399,11 @@ try:
 except ValueError:
     # fallback to regular list of values separated with misc chars
     ALLOWED_DOCUMENT_TYPES = [
-    'doc', 'docx', 'gif', 'jpg', 'jpeg', 'ods', 'odt', 'odp', 'pdf', 'png',
-    'ppt', 'pptx', 'rar', 'sld', 'tif', 'tiff', 'txt', 'xls', 'xlsx', 'xml',
-    'zip', 'gz', 'qml'
-] if os.getenv('ALLOWED_DOCUMENT_TYPES') is None \
-else re.split(r' *[,|:|;] *', os.getenv('ALLOWED_DOCUMENT_TYPES'))
+        'doc', 'docx', 'gif', 'jpg', 'jpeg', 'ods', 'odt', 'odp', 'pdf', 'png',
+        'ppt', 'pptx', 'rar', 'sld', 'tif', 'tiff', 'txt', 'xls', 'xlsx', 'xml',
+        'zip', 'gz', 'qml'
+    ] if os.getenv('ALLOWED_DOCUMENT_TYPES') is None \
+        else re.split(r' *[,|:|;] *', os.getenv('ALLOWED_DOCUMENT_TYPES'))
 
 MAX_DOCUMENT_SIZE = int(os.getenv('MAX_DOCUMENT_SIZE ', '2'))  # MB
 
@@ -603,7 +600,8 @@ LOCKDOWN_GEONODE = strtobool(os.getenv('LOCKDOWN_GEONODE', 'False'))
 # Add additional paths (as regular expressions) that don't require
 # authentication.
 # - authorized exempt urls needed for oauth when GeoNode is set to lockdown
-AUTH_EXEMPT_URLS = (r'^/?$', '/gs/*', '/static/*', '/o/*', '/api/o/*', '/api/roles', '/api/adminRole', '/api/users', '/api/layers',)
+AUTH_EXEMPT_URLS = (
+r'^/?$', '/gs/*', '/static/*', '/o/*', '/api/o/*', '/api/roles', '/api/adminRole', '/api/users', '/api/layers',)
 
 ANONYMOUS_USER_ID = os.getenv('ANONYMOUS_USER_ID', '-1')
 GUARDIAN_GET_INIT_ANONYMOUS_USER = os.getenv(
@@ -624,7 +622,6 @@ DEFAULT_ANONYMOUS_DOWNLOAD_PERMISSION = strtobool(
 # Settings for default search size
 #
 DEFAULT_SEARCH_SIZE = int(os.getenv('DEFAULT_SEARCH_SIZE', '10'))
-
 
 #
 # Settings for third party apps
@@ -650,7 +647,6 @@ ACTSTREAM_SETTINGS = {
     'USE_JSONFIELD': True,
     'GFK_FETCH_DEPTH': 1,
 }
-
 
 # Email for users to contact admins.
 THEME_ACCOUNT_CONTACT_EMAIL = os.getenv(
@@ -713,7 +709,7 @@ LOGIN_URL = os.getenv('LOGIN_URL', '{}account/login/'.format(SITEURL))
 LOGOUT_URL = os.getenv('LOGOUT_URL', '{}account/logout/'.format(SITEURL))
 
 ACCOUNT_LOGIN_REDIRECT_URL = os.getenv('LOGIN_REDIRECT_URL', SITEURL)
-ACCOUNT_LOGOUT_REDIRECT_URL =  os.getenv('LOGOUT_REDIRECT_URL', SITEURL)
+ACCOUNT_LOGOUT_REDIRECT_URL = os.getenv('LOGOUT_REDIRECT_URL', SITEURL)
 
 # Backend
 DEFAULT_WORKSPACE = os.getenv('DEFAULT_WORKSPACE', 'geonode')
@@ -779,10 +775,10 @@ OGC_SERVER = {
         'BACKEND_WRITE_ENABLED': True,
         'WPS_ENABLED': False,
         'LOG_FILE': '%s/geoserver/data/logs/geoserver.log'
-        % os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir)),
+                    % os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir)),
         # Set to name of database in DATABASES dictionary to enable
         # 'datastore',
-        'DATASTORE': os.getenv('DEFAULT_BACKEND_DATASTORE',''),
+        'DATASTORE': os.getenv('DEFAULT_BACKEND_DATASTORE', ''),
         'PG_GEOGIG': False,
         # 'CACHE': ".cache"  # local cache file to for HTTP requests
         'TIMEOUT': int(os.getenv('OGC_REQUEST_TIMEOUT', '10'))  # number of seconds to allow for HTTP requests
@@ -879,10 +875,10 @@ PYCSW = {
         'metadata:main': {
             'identification_title': 'GeoNode Catalogue',
             'identification_abstract': 'GeoNode is an open source platform' \
-            ' that facilitates the creation, sharing, and collaborative use' \
-            ' of geospatial data',
+                                       ' that facilitates the creation, sharing, and collaborative use' \
+                                       ' of geospatial data',
             'identification_keywords': 'sdi, catalogue, discovery, metadata,' \
-            ' GeoNode',
+                                       ' GeoNode',
             'identification_keywords_type': 'theme',
             'identification_fees': 'None',
             'identification_accessconstraints': 'None',
@@ -901,7 +897,7 @@ PYCSW = {
             'contact_url': 'Contact URL',
             'contact_hours': 'Hours of Service',
             'contact_instructions': 'During hours of service. Off on ' \
-            'weekends.',
+                                    'weekends.',
             'contact_role': 'pointOfContact',
         },
         'metadata:inspire': {
@@ -956,7 +952,7 @@ MAP_BASELAYERS = [{
     "name": "background",
     "visibility": False,
     "fixed": True,
-    "group":"background"
+    "group": "background"
 },
     # {
     #     "source": {"ptype": "gxp_olsource"},
@@ -970,13 +966,13 @@ MAP_BASELAYERS = [{
     #     "group":"background"
     # },
     {
-    "source": {"ptype": "gxp_osmsource"},
-    "type": "OpenLayers.Layer.OSM",
-    "name": "mapnik",
-    "visibility": True,
-    "fixed": True,
-    "group": "background"
-}]
+        "source": {"ptype": "gxp_osmsource"},
+        "type": "OpenLayers.Layer.OSM",
+        "name": "mapnik",
+        "visibility": True,
+        "fixed": True,
+        "group": "background"
+    }]
 
 DISPLAY_SOCIAL = strtobool(os.getenv('DISPLAY_SOCIAL', 'True'))
 DISPLAY_COMMENTS = strtobool(os.getenv('DISPLAY_COMMENTS', 'True'))
@@ -1006,7 +1002,7 @@ SOCIAL_ORIGINS = [{
 CKAN_ORIGINS = [{
     "label": "Humanitarian Data Exchange (HDX)",
     "url": "https://data.hdx.rwlabs.org/dataset/new?title={name}&"
-    "dataset_date={date}&notes={abstract}&caveats={caveats}",
+           "dataset_date={date}&notes={abstract}&caveats={caveats}",
     "css_class": "hdx"
 }]
 # SOCIAL_ORIGINS.extend(CKAN_ORIGINS)
@@ -1056,14 +1052,14 @@ SKIP_PERMS_FILTER = strtobool(os.getenv('SKIP_PERMS_FILTER', 'False'))
 HAYSTACK_FACET_COUNTS = strtobool(os.getenv('HAYSTACK_FACET_COUNTS', 'True'))
 if HAYSTACK_SEARCH:
     if 'haystack' not in INSTALLED_APPS:
-        INSTALLED_APPS += ('haystack', )
+        INSTALLED_APPS += ('haystack',)
     HAYSTACK_CONNECTIONS = {
-       'default': {
-           'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
-           'URL': os.getenv('HAYSTACK_ENGINE_URL', 'http://127.0.0.1:9200/'),
-           'INDEX_NAME': os.getenv('HAYSTACK_ENGINE_INDEX_NAME', 'haystack'),
-           },
-       }
+        'default': {
+            'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+            'URL': os.getenv('HAYSTACK_ENGINE_URL', 'http://127.0.0.1:9200/'),
+            'INDEX_NAME': os.getenv('HAYSTACK_ENGINE_INDEX_NAME', 'haystack'),
+        },
+    }
     HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = int(os.getenv('HAYSTACK_SEARCH_RESULTS_PER_PAGE', '200'))
 
@@ -1267,7 +1263,7 @@ FREETEXT_KEYWORDS_READONLY = False
 
 # notification settings
 NOTIFICATION_ENABLED = True or TEST
-#PINAX_NOTIFICATIONS_LANGUAGE_MODEL = "people.Profile"
+# PINAX_NOTIFICATIONS_LANGUAGE_MODEL = "people.Profile"
 
 # notifications backends
 _EMAIL_BACKEND = "pinax.notifications.backends.email.EmailBackend"
@@ -1292,7 +1288,7 @@ USER_MESSAGES_ALLOW_MULTIPLE_RECIPIENTS = False
 
 if NOTIFICATION_ENABLED:
     if NOTIFICATIONS_MODULE not in INSTALLED_APPS:
-        INSTALLED_APPS += (NOTIFICATIONS_MODULE, )
+        INSTALLED_APPS += (NOTIFICATIONS_MODULE,)
 
 # async signals can be the same as broker url
 # but they should have separate setting anyway
@@ -1435,7 +1431,7 @@ CELERY_TRACK_STARTED = True
 CELERY_SEND_TASK_SENT_EVENT = True
 
 # Disabled by default and I like it, because we use Sentry for this.
-#CELERY_SEND_TASK_ERROR_EMAILS = False
+# CELERY_SEND_TASK_ERROR_EMAILS = False
 
 # AWS S3 Settings
 
@@ -1463,7 +1459,6 @@ if S3_MEDIA_ENABLED:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     MEDIA_URL = "https://%s/%s/" % (AWS_S3_BUCKET_DOMAIN, MEDIAFILES_LOCATION)
 
-
 # Load additonal basemaps, see geonode/contrib/api_basemap/README.md
 try:
     from geonode.contrib.api_basemaps import *  # flake8: noqa
@@ -1473,7 +1468,7 @@ except ImportError:
 # Require users to authenticate before using Geonode
 if LOCKDOWN_GEONODE:
     MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + \
-        ('geonode.security.middleware.LoginRequiredMiddleware',)
+                         ('geonode.security.middleware.LoginRequiredMiddleware',)
 
 # for windows users check if they didn't set GEOS and GDAL in local_settings.py
 # maybe they set it as a windows environment
@@ -1658,12 +1653,12 @@ GEOTIFF_IO_BASE_URL = os.getenv(
 if USE_WORLDMAP:
     GEONODE_CLIENT_LOCATION = '/static/worldmap_client/'
     INSTALLED_APPS += (
-            'geoexplorer-worldmap',
-            'geonode.contrib.worldmap.gazetteer',
-            'geonode.contrib.worldmap.wm_extra',
-            'geonode.contrib.worldmap.mapnotes',
-            'geonode.contrib.createlayer',
-        )
+        'geoexplorer-worldmap',
+        'geonode.contrib.worldmap.gazetteer',
+        'geonode.contrib.worldmap.wm_extra',
+        'geonode.contrib.worldmap.mapnotes',
+        'geonode.contrib.createlayer',
+    )
     # WorldMap Gazetter settings
     USE_GAZETTEER = True
     GAZETTEER_DB_ALIAS = 'default'
